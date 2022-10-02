@@ -1,6 +1,6 @@
 internal:
   iapi:
-    member-api: iapi.dev.in.musinsa.com/member
+    member-api: my.local.musinsa.com:8000/member
 
 feign:
   circuitbreaker:
@@ -11,11 +11,11 @@ feign:
     config:
       default:
         connectTimeout: 1000
-        readTimeout: 5000
+        readTimeout: 2000
         loggerLevel: FULL
       memberApiClient:
         connectTimeout: 1000
-        readTimeout: 5000
+        readTimeout: 1000
         loggerLevel: FULL
 
 logging:
@@ -40,7 +40,7 @@ resilience4j:
   timelimiter:
     configs:
       default:
-        timeoutDuration: 1s                              # timeout 발생 시간 (ms)
+        timeoutDuration: 2s                              # timeout 발생 시간 (ms)
         cancelRunningFuture: true                           # timeout 발생 후 future 취소 여부
   bulkhead:
     configs:
