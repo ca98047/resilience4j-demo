@@ -1,0 +1,42 @@
+internal:
+  iapi:
+    member-api: iapi.dev.in.musinsa.com/member
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default: # 50%의 실패율(10개 중 최소 5개) / 50%의 호출지연율(10개 중 최소 5개) 발생시 10초 동안 circuit-breaker open
+        failureRateThreshold: 50                            # fail call 임계값 (백분율)
+        slowCallRateThreshold: 50                           # slow call 임계값 (백분율)
+        slowCallDurationThreshold: 4000                    # slow call 기준값 (ms)
+        slidingWindowType: COUNT_BASED                      # close 전환시 request 타입 (COUNT_BASED/TIME_BASED)
+        slidingWindowSize: 10                               # close 전환을 판단하는 측정치 (개수 혹은 시간)
+        minimumNumberOfCalls: 10                            # open or close 전환 최소 호출 수
+        waitDurationInOpenState: 10000                      # open → half-open으로 전환할때 circuitbreaker가 대기해야하는 시간.(ms)
+        automaticTransitionFromOpenToHalfOpenEnabled: true  # open to half-open 자동 전환 여부
+        registerHealthIndicator: true                       # Health 체크
+        eventConsumerBufferSize: 10                         # 이벤트 버퍼 사이즈
+        permittedNumberOfCallsInHalfOpenState: 100          # half-open 상태에서 허용되는 호출 수 (COUNT_BASED인 경우)
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 1s                              # timeout 발생 시간 (ms)
+        cancelRunningFuture: true                           # timeout 발생 후 future 취소 여부
+  bulkhead:
+    configs:
+      default:
+        maxWaitDuration: 10                                 # 스레드가 차단되는 최대 시간 (ms)
+        maxConcurrentCalls: 20                              # 최대 병렬 횟수
+  ratelimiter:
+    configs:
+      default:
+        registerHealthIndicator: false                      # Health 체크
+        eventConsumerBufferSize: 100                        # 이벤트 버퍼 사이즈
+        limitForPeriod: 50                                  # limit count
+        limitRefreshPeriod: 500                             # limit count가 재실행되는 시간 (ms)
+        timeoutDuration: 1                                  # 요청을 허용하기 전까지 대기 시간 (s)
+  retry:
+    configs:
+      default:
+        max-attempts: 2                                     # 최대 재시도 횟수
+        waitDuration: 500                                   # 재시도 간의 대기 시간 (ms)
