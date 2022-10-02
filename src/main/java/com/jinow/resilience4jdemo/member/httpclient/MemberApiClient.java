@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "memberApiClient",
-        url = "${internal.iapi.member-api}")
+        url = "${internal.iapi.member-api}", fallbackFactory = MemberApiClientFallbackFactory.class)
 public interface MemberApiClient {
 
     @GetMapping(value = "/v1/{memberUid}")
