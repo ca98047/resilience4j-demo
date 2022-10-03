@@ -31,7 +31,7 @@ resilience4j:
         slowCallDurationThreshold: 4000                    # slow call 기준값 (ms)
         slidingWindowType: COUNT_BASED                      # close 전환시 request 타입 (COUNT_BASED/TIME_BASED)
         slidingWindowSize: 10                               # close 전환을 판단하는 측정치 (개수 혹은 시간)
-        minimumNumberOfCalls: 10                            # open or close 전환 최소 호출 수
+        minimumNumberOfCalls: 4                            # open or close 전환 최소 호출 수
         waitDurationInOpenState: 10000                      # open → half-open으로 전환할때 circuitbreaker가 대기해야하는 시간.(ms)
         automaticTransitionFromOpenToHalfOpenEnabled: true  # open to half-open 자동 전환 여부
         registerHealthIndicator: true                       # Health 체크
